@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using RadiationCounterAPI.Models;
 using RadiationCounterAPI.Implementation;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("RadiationCounterAPI.Test")]
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

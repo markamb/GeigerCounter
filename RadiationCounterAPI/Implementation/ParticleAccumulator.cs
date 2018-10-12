@@ -13,7 +13,7 @@ namespace RadiationCounterAPI.Implementation
     /// This class is not thread safe and assumes any locking is done externally.
     /// 
     /// </summary>
-    public class ParticleAccumulator
+    class ParticleAccumulator
     {
         private readonly ITimeProvider _TimeProvider;   // Service for loading the current time
         private readonly DateTime _StartTime;           // Time we started accumulating samples

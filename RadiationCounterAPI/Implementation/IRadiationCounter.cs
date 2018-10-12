@@ -1,6 +1,7 @@
 ﻿using RadiationCounterAPI.Models;
 
 namespace RadiationCounterAPI.Implementation
+
 {
     public interface IRadiationCounter
     {

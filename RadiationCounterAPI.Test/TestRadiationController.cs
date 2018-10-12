@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Moq;
 using NUnit.Framework;
-using RadiationCounterAPI.Controllers;
 using RadiationCounterAPI.Models;
 using RadiationCounterAPI.Implementation;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+using RadiationCounterAPI.Controllers;
 
 namespace RadiationCounterAPI.Test
 {
