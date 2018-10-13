@@ -2,11 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RadiationCounterAPI.Models;
 using RadiationCounterAPI.Implementation;
-using System.Runtime.CompilerServices;
-
-[assembly: InternalsVisibleTo("RadiationCounterAPI.Test")]
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using System.Threading.Tasks;
 
 namespace RadiationCounterAPI.Controllers
 {
@@ -23,6 +19,13 @@ namespace RadiationCounterAPI.Controllers
             _counter = counter;
         }
 
+        // GET /status
+        [HttpGet("/status", Name = "Status")]
+        public ActionResult<string> GetStatus()
+        {
+            return "OK";
+        }
+
         // POST:  /particles
         [HttpPost("/particles")]
         public void TakeReading([FromBody]ParticleReading reading)
@@ -32,22 +35,22 @@ namespace RadiationCounterAPI.Controllers
 
         // GET radiation/average
         [HttpGet("/radiation/average", Name = "GetSample")]
-        public ActionResult<RadiationSample> GetSample()
+        public async Task<ActionResult<RadiationSample>> GetSample()
         {
             // Calculate the particle counts per second since the last sample was taken,
             // store then return it.
             var sample = _counter.CalcSample();
-            _context.AddSample(sample);
-            _context.SaveChanges();
+            _context.AddSampleAsync(sample);
+            await _context.SaveChangesAsync();
             return sample;
         }
 
         // GET radiation/results
         [HttpGet("/radiation/results", Name = "GetResults")]
-        public ActionResult<List<RadiationSample>> GetAllSamples()
+        public async Task<ActionResult<List<RadiationSample>>> GetAllSamples()
         {
             // Note: If no samples have been read yet we return back a valid but empty list
-            return _context.GetSamplesList();
+            return await _context.GetSamplesListAsync();
         }
     }
 }

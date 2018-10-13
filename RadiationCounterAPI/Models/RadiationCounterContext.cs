@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace RadiationCounterAPI.Models
@@ -15,14 +16,31 @@ namespace RadiationCounterAPI.Models
         /// </summary>
         public DbSet<RadiationSample> Samples { get; set; }
 
-        public virtual List<RadiationSample> GetSamplesList()
+        /// <summary>
+        /// Ensure that the database is created and initialised with any seed data (none at present)
+        /// Not that this is for development use only
+        /// </summary>
+        public virtual void EnsureDatabaseCreated()
         {
-            return Samples.ToList();
+            Database.EnsureCreated();
         }
 
-        public virtual void AddSample(RadiationSample sample)
+        /// <summary>
+        /// Return a list of all samples stored to date
+        /// </summary>
+        /// <returns></returns>
+        public virtual async Task<List<RadiationSample>> GetSamplesListAsync()
         {
-            Samples.Add(sample);
+            return await Samples.ToListAsync();
+        }
+
+        /// <summary>
+        /// Add a new sample to the database
+        /// </summary>
+        /// <param name="sample"></param>
+        public virtual async void AddSampleAsync(RadiationSample sample)
+        {
+            await Samples.AddAsync(sample);
         }
         
     }

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using Moq;
 using NUnit.Framework;
 using RadiationCounterAPI.Models;
 using RadiationCounterAPI.Implementation;
 using Microsoft.EntityFrameworkCore;
 using RadiationCounterAPI.Controllers;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace RadiationCounterAPI.Test
 {
@@ -63,15 +66,15 @@ namespace RadiationCounterAPI.Test
 
             // Expect sample to be calculated from counter, then stored in the context DB
             _MockCounter.SetupSequence(x => x.CalcSample()).Returns(samples[0]).Returns(samples[1]);
-            _MockContext.Setup(x => x.AddSample(samples[0]));
-            _MockContext.Setup(x => x.SaveChanges()).Returns(0);
-            _MockContext.Setup(x => x.AddSample(samples[1]));
-            _MockContext.Setup(x => x.SaveChanges()).Returns(0);
+            _MockContext.Setup(x => x.AddSampleAsync(samples[0]));
+            _MockContext.Setup(x => x.SaveChangesAsync(new CancellationToken())).Returns(Task.FromResult(0));
+            _MockContext.Setup(x => x.AddSampleAsync(samples[1]));
+            _MockContext.Setup(x => x.SaveChangesAsync(new CancellationToken())).Returns(Task.FromResult(0));
 
             // now create the controller and test
             var controller = new RadiationController(_MockContext.Object, _MockCounter.Object);
-            Assert.AreEqual(samples[0], controller.GetSample().Value);
-            Assert.AreEqual(samples[1], controller.GetSample().Value);
+            Assert.AreEqual(samples[0], controller.GetSample().Result.Value);
+            Assert.AreEqual(samples[1], controller.GetSample().Result.Value);
 
             // Validate
             _MockCounter.VerifyAll();
@@ -92,12 +95,12 @@ namespace RadiationCounterAPI.Test
             samples2.Add(new RadiationSample { LastCalc = dt.AddSeconds(40), Alpha = 6.0, Beta = 9.0, Gamma = 10, Samples = 10, Id = 3 });
 
             // Expect to calls to calc samples
-            _MockContext.SetupSequence(x => x.GetSamplesList()).Returns(samples1).Returns(samples2);
+            _MockContext.SetupSequence(x => x.GetSamplesListAsync()).Returns(Task.FromResult(samples1)).Returns(Task.FromResult(samples2));
 
             // now create the controller and test
             var controller = new RadiationController(_MockContext.Object, _MockCounter.Object);
-            Assert.AreEqual(samples1, controller.GetAllSamples().Value);
-            Assert.AreEqual(samples2, controller.GetAllSamples().Value);
+            Assert.AreEqual(samples1, controller.GetAllSamples().Result.Value);
+            Assert.AreEqual(samples2, controller.GetAllSamples().Result.Value);
 
             _MockCounter.VerifyAll();
             _MockContext.VerifyAll();
