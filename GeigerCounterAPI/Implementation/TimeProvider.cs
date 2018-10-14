@@ -3,7 +3,7 @@
 namespace GeigerCounterAPI.Implementation
 {
     /// <summary>
-    /// Concrete class for retrieving the current system date using the system clock
+    /// Concrete class for retrieving the current system date and time using the system clock
     /// </summary>
     class TimeProvider : ITimeProvider
     {

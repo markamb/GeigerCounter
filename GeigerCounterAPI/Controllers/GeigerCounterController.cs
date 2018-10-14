@@ -46,6 +46,8 @@ namespace GeigerCounterAPI.Controllers
         /// <response code="200">Reading recorded</response>
         /// <response code="400">If not all counts are provided</response>    
         [HttpPost("/particles")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         public ActionResult TakeReading([FromBody]ParticleReading reading)
         {
             if (!ModelState.IsValid)
@@ -73,6 +75,7 @@ namespace GeigerCounterAPI.Controllers
         /// <returns>A radiation sample</returns>
         /// <response code="200">A radiation sample has been returned</response> 
         [HttpGet("/radiation/average", Name = "GetSample")]
+        [ProducesResponseType(200, Type = typeof(RadiationSample))]
         public async Task<ActionResult<RadiationSample>> GetSample()
         {
             // Calculate the particle counts per second since the last sample was taken,
@@ -97,12 +100,18 @@ namespace GeigerCounterAPI.Controllers
         /// </remarks>
         /// 
         /// <returns>A list of all historical radiation samples</returns>
-        /// <response code="200">Radiation samples have been returned</response> 
+        /// <response code="200">Radiation samples have been returned</response>
+        /// <response code="404">No historical samples available</response> 
         [HttpGet("/radiation/results", Name = "GetResults")]
+        [ProducesResponseType(200, Type = typeof(List<RadiationSample>))]
+        [ProducesResponseType(404)]
         public async Task<ActionResult<List<RadiationSample>>> GetAllSamples()
         {
             // Note: If no samples have been read yet we return back a valid but empty list
-            return await _context.GetSamplesListAsync();
+            var result = await _context.GetSamplesListAsync();
+            if (result.Count == 0)
+                return NotFound("No results available.");
+            return result;
         }
     }
 }

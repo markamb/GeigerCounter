@@ -22,12 +22,12 @@ namespace GeigerCounterAPI.Test
             mockClock.SetupSequence(x => x.Now).Returns(t1).Returns(t2);
 
             var p = new ParticleAccumulator(mockClock.Object);
-            p.TakeReading(new ParticleReading() { Alpha = 1, Beta = 2, Gamma = 1} );
-            p.TakeReading(new ParticleReading() { Alpha = 1, Beta = 2, Gamma = 0 });
-            p.TakeReading(new ParticleReading() { Alpha = 1, Beta = 2, Gamma = 1 });
-            p.TakeReading(new ParticleReading() { Alpha = 2, Beta = 4, Gamma = 0 });
-            p.TakeReading(new ParticleReading() { Alpha = 2, Beta = 4, Gamma = 1 });
-            p.TakeReading(new ParticleReading() { Alpha = 2, Beta = 4, Gamma = 0 });
+            p.TakeReading(new ParticleReading { Alpha = 1, Beta = 2, Gamma = 1} );
+            p.TakeReading(new ParticleReading { Alpha = 1, Beta = 2, Gamma = 0 });
+            p.TakeReading(new ParticleReading { Alpha = 1, Beta = 2, Gamma = 1 });
+            p.TakeReading(new ParticleReading { Alpha = 2, Beta = 4, Gamma = 0 });
+            p.TakeReading(new ParticleReading { Alpha = 2, Beta = 4, Gamma = 1 });
+            p.TakeReading(new ParticleReading { Alpha = 2, Beta = 4, Gamma = 0 });
             var s = p.CalcSample();
 
             mockClock.Verify();
@@ -48,9 +48,9 @@ namespace GeigerCounterAPI.Test
             mockClock.SetupSequence(x => x.Now).Returns(t1).Returns(t2);
 
             var p = new ParticleAccumulator(mockClock.Object);
-            p.TakeReading(new ParticleReading() { Alpha = 0, Beta = 0, Gamma = 0 });
-            p.TakeReading(new ParticleReading() { Alpha = 0, Beta = 0, Gamma = 0 });
-            p.TakeReading(new ParticleReading() { Alpha = 0, Beta = 0, Gamma = 0 });
+            p.TakeReading(new ParticleReading { Alpha = 0, Beta = 0, Gamma = 0 });
+            p.TakeReading(new ParticleReading { Alpha = 0, Beta = 0, Gamma = 0 });
+            p.TakeReading(new ParticleReading { Alpha = 0, Beta = 0, Gamma = 0 });
             var s = p.CalcSample();
 
             mockClock.Verify();
@@ -91,8 +91,8 @@ namespace GeigerCounterAPI.Test
             mockClock.SetupSequence(x => x.Now).Returns(t1).Returns(t2);
 
             var p = new ParticleAccumulator(mockClock.Object);
-            p.TakeReading(new ParticleReading() { Alpha = 10, Beta = 10, Gamma = 10 });
-            p.TakeReading(new ParticleReading() { Alpha = 10, Beta = 10, Gamma = 10 });
+            p.TakeReading(new ParticleReading { Alpha = 10, Beta = 10, Gamma = 10 });
+            p.TakeReading(new ParticleReading { Alpha = 10, Beta = 10, Gamma = 10 });
             var s = p.CalcSample();
 
             mockClock.Verify();
@@ -112,7 +112,7 @@ namespace GeigerCounterAPI.Test
             var mockClock = new Mock<ITimeProvider>(MockBehavior.Strict);
             mockClock.SetupSequence(x => x.Now).Returns(t1).Returns(t2);
 
-            var reading = new ParticleReading() {Alpha = 10, Beta = 10, Gamma = 10};
+            var reading = new ParticleReading {Alpha = 10, Beta = 10, Gamma = 10};
             var p = new ParticleAccumulator(mockClock.Object);
             p.TakeReading(reading);
             p.TakeReading(reading);
@@ -138,7 +138,7 @@ namespace GeigerCounterAPI.Test
             var mockClock = new Mock<ITimeProvider>(MockBehavior.Strict);
             mockClock.SetupSequence(x => x.Now).Returns(t1).Returns(t2);
 
-            var reading = new ParticleReading() { Alpha = 10, Beta = null, Gamma = null };
+            var reading = new ParticleReading { Alpha = 10, Beta = null, Gamma = null };
             var p = new ParticleAccumulator(mockClock.Object);
             p.TakeReading(reading);
             var s = p.CalcSample();

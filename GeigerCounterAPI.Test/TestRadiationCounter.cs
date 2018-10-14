@@ -7,7 +7,7 @@ using Moq;
 namespace GeigerCounterAPI.Test
 {
     [TestFixture]
-    class TestRadiationCounter
+    internal class TestRadiationCounter
     {
         // Delta for floating point comparisons
         private const double DblDelta = 1e-8;
@@ -15,7 +15,7 @@ namespace GeigerCounterAPI.Test
         [Test]
         public void When_TakingTwoReadings_Expect_CorrectPerSecondRates()
         {
-            var reading = new ParticleReading() {Alpha = 1, Beta = 2, Gamma = 3};
+            var reading = new ParticleReading {Alpha = 1, Beta = 2, Gamma = 3};
             var t1 = new DateTime(2018, 6, 1, 12, 0, 0);
             var t2 = t1.AddSeconds(2.0);
             var t3 = t2;
@@ -83,7 +83,7 @@ namespace GeigerCounterAPI.Test
         [Test]
         public void When_EqualStartAndEnd_ZeroRates()
         {
-            var reading = new ParticleReading() { Alpha = 1, Beta = 2, Gamma = 3 };
+            var reading = new ParticleReading { Alpha = 1, Beta = 2, Gamma = 3 };
             var t1 = new DateTime(2018, 6, 1, 12, 0, 0);
             var t2 = t1;
 

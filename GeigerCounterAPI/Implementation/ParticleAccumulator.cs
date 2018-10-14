@@ -62,7 +62,7 @@ namespace GeigerCounterAPI.Implementation
                 throw new InvalidOperationException("Attempt to CalcSamples twice");
             _done = true;
 
-            DateTime now = _timeProvider.Now;
+            var now = _timeProvider.Now;
             var sample = new RadiationSample
             {
                 LastCalc = _startTime,
@@ -72,14 +72,13 @@ namespace GeigerCounterAPI.Implementation
                 Gamma = 0.0
             };
 
-            double seconds = (now - _startTime).TotalSeconds;
-            if (seconds > 0.0)
-            {
-                sample.Alpha = _alpha / seconds;
-                sample.Beta =  _beta / seconds;
-                sample.Gamma = _gamma / seconds;
-            }
+            var seconds = (now - _startTime).TotalSeconds;
+            if (seconds <= 0.0)
+                return sample;
 
+            sample.Alpha = _alpha / seconds;
+            sample.Beta =  _beta / seconds;
+            sample.Gamma = _gamma / seconds;
             return sample;
         }
     }

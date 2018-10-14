@@ -29,10 +29,11 @@ namespace GeigerCounterAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Swap the following 2 lines to replace the SQL Server LocalDB for an in memory database
 //            services.AddDbContext<GeigerCounterContext>(opt => opt.UseInMemoryDatabase("RadiationCounter"));
             services.AddDbContext<GeigerCounterContext>(options => options.UseSqlServer(Configuration.GetConnectionString("RadiationCounterDatabase")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddSingleton<IRadiationCounter, RadiationCounter>((ctx) => new RadiationCounter(new TimeProvider()));
+            services.AddSingleton<IRadiationCounter, RadiationCounter>(ctx => new RadiationCounter(new TimeProvider()));
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -42,7 +43,7 @@ namespace GeigerCounterAPI
                     Version = "v1",
                     Title = "Geiger Counter API",
                     Description = "A simple Web API for recording ionising radiation readings and returning average samples over time.",
-                    TermsOfService = "None",
+                    TermsOfService = "None"
                 });
 
                 // Set the comments path for the Swagger JSON and UI.

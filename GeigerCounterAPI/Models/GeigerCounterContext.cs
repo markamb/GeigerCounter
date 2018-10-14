@@ -17,7 +17,7 @@ namespace GeigerCounterAPI.Models
 
         /// <summary>
         /// Ensure that the database is created and initialised with any seed data (none at present)
-        /// Not that this is for development use only
+        /// This is intended for development use only.
         /// </summary>
         public virtual void EnsureDatabaseCreated()
         {
@@ -27,7 +27,7 @@ namespace GeigerCounterAPI.Models
         /// <summary>
         /// Return a list of all samples stored to date
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A list of all historical samples returned to date</returns>
         public virtual async Task<List<RadiationSample>> GetSamplesListAsync()
         {
             return await Samples.ToListAsync();

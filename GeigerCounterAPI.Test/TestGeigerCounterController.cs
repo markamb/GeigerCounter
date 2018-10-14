@@ -60,7 +60,7 @@ namespace GeigerCounterAPI.Test
             var samples = new List<RadiationSample>
             {
                 new RadiationSample { LastCalc = dt, Alpha = 12.0, Beta = 18.0, Gamma = 3.5, Samples = 12, Id = 1},
-                new RadiationSample { LastCalc = dt.AddSeconds(30), Alpha = 1.0, Beta = 8.0, Gamma = 5, Samples = 2, Id = 2},
+                new RadiationSample { LastCalc = dt.AddSeconds(30), Alpha = 1.0, Beta = 8.0, Gamma = 5, Samples = 2, Id = 2}
             };
 
             // Expect sample to be calculated from counter, then stored in the context DB
@@ -84,7 +84,7 @@ namespace GeigerCounterAPI.Test
         public void When_GetAllSamples_Expect_AllReturned()
         {
             // Test data
-            DateTime dt = new DateTime(2018, 10, 10, 12, 0, 0);
+            var dt = new DateTime(2018, 10, 10, 12, 0, 0);
             var samples1 = new List<RadiationSample>
             {
                 new RadiationSample { LastCalc = dt, Alpha = 12.0, Beta = 18.0, Gamma = 3.5, Samples = 12, Id = 1},

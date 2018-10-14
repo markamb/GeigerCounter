@@ -13,7 +13,7 @@ namespace GeigerCounterAPI
         {
             var host = CreateWebHostBuilder(args).Build();
             //
-            // Ensure a test database has been created - this is for use during the development stage only
+            // Ensure a test database has been created - this is intended for use during the development stage only
             // 
             using (var scope = host.Services.CreateScope())
             {

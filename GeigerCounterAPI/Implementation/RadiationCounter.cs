@@ -1,5 +1,4 @@
-﻿using System;
-using GeigerCounterAPI.Models;
+﻿using GeigerCounterAPI.Models;
 
 namespace GeigerCounterAPI.Implementation
 {
@@ -8,13 +7,13 @@ namespace GeigerCounterAPI.Implementation
     /// </summary>
     public class RadiationCounter : IRadiationCounter
     {
-        private readonly Object _lock;
+        private readonly object _lock;
         private ParticleAccumulator _accumulator;
         private readonly ITimeProvider _clock;
 
         public RadiationCounter(ITimeProvider clock)
         {
-            _lock = new Object();
+            _lock = new object();
             _accumulator = new ParticleAccumulator(clock);
             _clock = clock;
         }
