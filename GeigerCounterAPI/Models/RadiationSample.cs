@@ -15,7 +15,7 @@ namespace GeigerCounterAPI.Models
         /// <summary>
         /// Start time of this average radiation sample
         /// </summary>
-        public DateTime LastCalc { get; set; }
+        public DateTimeOffset LastCalc { get; set; }
         /// <summary>
         /// Number of samples making up this average
         /// </summary>

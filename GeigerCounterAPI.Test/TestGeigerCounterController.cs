@@ -56,7 +56,7 @@ namespace GeigerCounterAPI.Test
         public void When_TakingSample_Expect_SampleCalculatedThenStored()
         {
             // Test Data
-            DateTime dt = new DateTime(2018, 10, 10, 12, 0, 0);
+            DateTimeOffset dt = new DateTime(2018, 10, 10, 12, 0, 0);
             var samples = new List<RadiationSample>
             {
                 new RadiationSample { LastCalc = dt, Alpha = 12.0, Beta = 18.0, Gamma = 3.5, Samples = 12, Id = 1},
