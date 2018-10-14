@@ -13,6 +13,7 @@ namespace GeigerCounterAPI
     {
         public IConfiguration Configuration { get; set; }
 
+        // ReSharper disable once UnusedParameter.Local
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -27,7 +28,7 @@ namespace GeigerCounterAPI
 //            services.AddDbContext<GeigerCounterContext>(opt => opt.UseInMemoryDatabase("RadiationCounter"));
             services.AddDbContext<GeigerCounterContext>(options => options.UseSqlServer(Configuration.GetConnectionString("RadiationCounterDatabase")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddSingleton<IRadiationCounter, RadiationCounter>((ctx) => { return new RadiationCounter(new TimeProvider()); });
+            services.AddSingleton<IRadiationCounter, RadiationCounter>((ctx) => new RadiationCounter(new TimeProvider()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

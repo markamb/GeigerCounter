@@ -4,32 +4,30 @@ using System.Threading;
 using Moq;
 using NUnit.Framework;
 using Microsoft.EntityFrameworkCore;
-using GeigerCounterAPI.Controllers;
 using System.Threading.Tasks;
 using GeigerCounterAPI.Implementation;
 using GeigerCounterAPI.Models;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace GeigerCounterAPI.Test
 {
     [TestFixture]
     public class GeigerCounterController
     {
-        private Mock<GeigerCounterContext>   _MockContext;
-        private Mock<IRadiationCounter>         _MockCounter;
+        private Mock<GeigerCounterContext>   _mockContext;
+        private Mock<IRadiationCounter>      _mockCounter;
 
         [SetUp]
         public void Setup()
         {
-            _MockContext = new Mock<GeigerCounterContext>(MockBehavior.Strict, new DbContextOptions<GeigerCounterContext>());
-            _MockCounter = new Mock<IRadiationCounter>(MockBehavior.Strict);
+            _mockContext = new Mock<GeigerCounterContext>(MockBehavior.Strict, new DbContextOptions<GeigerCounterContext>());
+            _mockCounter = new Mock<IRadiationCounter>(MockBehavior.Strict);
         }
 
         [TearDown]
         public void Teardown()
         {
-            _MockContext = null;
-            _MockCounter = null;
+            _mockContext = null;
+            _mockCounter = null;
         }
 
         [Test]
@@ -40,17 +38,17 @@ namespace GeigerCounterAPI.Test
             var reading2 = new ParticleReading { Alpha = 50, Beta = 80, Gamma = 0 };
 
             // Setup
-            _MockCounter.Setup(x => x.TakeReading(reading1));
-            _MockCounter.Setup(x => x.TakeReading(reading2));
+            _mockCounter.Setup(x => x.TakeReading(reading1));
+            _mockCounter.Setup(x => x.TakeReading(reading2));
 
             // Create the controller and take some readings
-            var controller = new Controllers.GeigerCounterController(_MockContext.Object, _MockCounter.Object);
+            var controller = new Controllers.GeigerCounterController(_mockContext.Object, _mockCounter.Object);
             controller.TakeReading(reading1);
             controller.TakeReading(reading2);
 
             // Validate
-            _MockCounter.VerifyAll();
-            _MockContext.VerifyAll();
+            _mockCounter.VerifyAll();
+            _mockContext.VerifyAll();
         }
 
         [Test]
@@ -65,20 +63,20 @@ namespace GeigerCounterAPI.Test
             };
 
             // Expect sample to be calculated from counter, then stored in the context DB
-            _MockCounter.SetupSequence(x => x.CalcSample()).Returns(samples[0]).Returns(samples[1]);
-            _MockContext.Setup(x => x.AddSampleAsync(samples[0]));
-            _MockContext.Setup(x => x.SaveChangesAsync(new CancellationToken())).Returns(Task.FromResult(0));
-            _MockContext.Setup(x => x.AddSampleAsync(samples[1]));
-            _MockContext.Setup(x => x.SaveChangesAsync(new CancellationToken())).Returns(Task.FromResult(0));
+            _mockCounter.SetupSequence(x => x.CalcSample()).Returns(samples[0]).Returns(samples[1]);
+            _mockContext.Setup(x => x.AddSampleAsync(samples[0]));
+            _mockContext.Setup(x => x.SaveChangesAsync(new CancellationToken())).Returns(Task.FromResult(0));
+            _mockContext.Setup(x => x.AddSampleAsync(samples[1]));
+            _mockContext.Setup(x => x.SaveChangesAsync(new CancellationToken())).Returns(Task.FromResult(0));
 
             // now create the controller and test
-            var controller = new Controllers.GeigerCounterController(_MockContext.Object, _MockCounter.Object);
+            var controller = new Controllers.GeigerCounterController(_mockContext.Object, _mockCounter.Object);
             Assert.AreEqual(samples[0], controller.GetSample().Result.Value);
             Assert.AreEqual(samples[1], controller.GetSample().Result.Value);
 
             // Validate
-            _MockCounter.VerifyAll();
-            _MockContext.VerifyAll();
+            _mockCounter.VerifyAll();
+            _mockContext.VerifyAll();
         }
 
         [Test]
@@ -91,19 +89,21 @@ namespace GeigerCounterAPI.Test
                 new RadiationSample { LastCalc = dt, Alpha = 12.0, Beta = 18.0, Gamma = 3.5, Samples = 12, Id = 1},
                 new RadiationSample { LastCalc = dt.AddSeconds(30), Alpha = 1.0, Beta = 8.0, Gamma = 5, Samples = 2, Id = 2}
             };
-            var samples2 = new List<RadiationSample>(samples1);
-            samples2.Add(new RadiationSample { LastCalc = dt.AddSeconds(40), Alpha = 6.0, Beta = 9.0, Gamma = 10, Samples = 10, Id = 3 });
+            var samples2 = new List<RadiationSample>(samples1)
+            {
+                new RadiationSample { LastCalc = dt.AddSeconds(40), Alpha = 6.0, Beta = 9.0, Gamma = 10, Samples = 10, Id = 3 }
+            };
 
             // Expect to calls to calc samples
-            _MockContext.SetupSequence(x => x.GetSamplesListAsync()).Returns(Task.FromResult(samples1)).Returns(Task.FromResult(samples2));
+            _mockContext.SetupSequence(x => x.GetSamplesListAsync()).Returns(Task.FromResult(samples1)).Returns(Task.FromResult(samples2));
 
             // now create the controller and test
-            var controller = new Controllers.GeigerCounterController(_MockContext.Object, _MockCounter.Object);
+            var controller = new Controllers.GeigerCounterController(_mockContext.Object, _mockCounter.Object);
             Assert.AreEqual(samples1, controller.GetAllSamples().Result.Value);
             Assert.AreEqual(samples2, controller.GetAllSamples().Result.Value);
 
-            _MockCounter.VerifyAll();
-            _MockContext.VerifyAll();
+            _mockCounter.VerifyAll();
+            _mockContext.VerifyAll();
         }
 
 

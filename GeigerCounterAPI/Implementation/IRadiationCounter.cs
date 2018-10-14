@@ -12,7 +12,7 @@ namespace GeigerCounterAPI.Implementation
         void TakeReading(ParticleReading reading);
 
         /// <summary>
-        /// Calulates the average number of particles per second recorded by this instance
+        /// Calculates the average number of particles per second recorded by this instance
         /// </summary>
         /// <returns></returns>
         RadiationSample CalcSample();

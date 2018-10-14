@@ -15,23 +15,23 @@ namespace GeigerCounterAPI.Implementation
     /// </summary>
     class ParticleAccumulator
     {
-        private readonly ITimeProvider _TimeProvider;   // Service for loading the current time
-        private readonly DateTime _StartTime;           // Time we started accumulating samples
-        private bool _Done;                             // true when CalcSamples has been called
-        private int  _Samples;
-        private long _Alpha;
-        private long _Beta;
-        private long _Gamma;
+        private readonly ITimeProvider _timeProvider;   // Service for loading the current time
+        private readonly DateTime _startTime;           // Time we started accumulating samples
+        private bool _done;                             // true when CalcSamples has been called
+        private int  _samples;
+        private long _alpha;
+        private long _beta;
+        private long _gamma;
 
-        public ParticleAccumulator(ITimeProvider TimeProvider)
+        public ParticleAccumulator(ITimeProvider timeProvider)
         {            
-            _TimeProvider = TimeProvider;
-            _StartTime = _TimeProvider.Now;
-            _Done = false;
-            _Samples = 0;
-            _Alpha = 0;
-            _Beta = 0;
-            _Gamma = 0;
+            _timeProvider = timeProvider;
+            _startTime = _timeProvider.Now;
+            _done = false;
+            _samples = 0;
+            _alpha = 0;
+            _beta = 0;
+            _gamma = 0;
         }
 
         /// <summary>
@@ -40,13 +40,13 @@ namespace GeigerCounterAPI.Implementation
         /// <param name="reading">A radiation reading to be accumulated</param>
         public void TakeReading(ParticleReading reading)
         {
-            if (_Done)
+            if (_done)
                 throw new InvalidOperationException("Attempt to take radiation reading after sample has been calculated");
 
-            _Samples++;
-            _Alpha += reading.Alpha;
-            _Beta += reading.Beta;
-            _Gamma += reading.Gamma;
+            _samples++;
+            _alpha += reading.Alpha;
+            _beta += reading.Beta;
+            _gamma += reading.Gamma;
         }
 
         /// <summary>
@@ -58,26 +58,26 @@ namespace GeigerCounterAPI.Implementation
         /// <returns></returns>
         public RadiationSample CalcSample()
         {
-            if (_Done)
+            if (_done)
                 throw new InvalidOperationException("Attempt to CalcSamples twice");
-            _Done = true;
+            _done = true;
 
-            DateTime now = _TimeProvider.Now;
+            DateTime now = _timeProvider.Now;
             var sample = new RadiationSample
             {
-                LastCalc = _StartTime,
-                Samples = this._Samples,
+                LastCalc = _startTime,
+                Samples = _samples,
                 Alpha = 0.0,
                 Beta = 0.0,
                 Gamma = 0.0
             };
 
-            double seconds = (now - _StartTime).TotalSeconds;
+            double seconds = (now - _startTime).TotalSeconds;
             if (seconds > 0.0)
             {
-                sample.Alpha = (double) _Alpha / seconds;
-                sample.Beta = (double) _Beta / seconds;
-                sample.Gamma = (double) _Gamma / seconds;
+                sample.Alpha = _alpha / seconds;
+                sample.Beta =  _beta / seconds;
+                sample.Gamma = _gamma / seconds;
             }
 
             return sample;

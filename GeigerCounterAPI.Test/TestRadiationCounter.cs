@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using GeigerCounterAPI.Implementation;
 using GeigerCounterAPI.Models;
 using NUnit.Framework;
@@ -53,7 +51,6 @@ namespace GeigerCounterAPI.Test
         [Test]
         public void When_NoReadings_CorrectZeroRates()
         {
-            var reading = new ParticleReading() { Alpha = 1, Beta = 2, Gamma = 3 };
             var t1 = new DateTime(2018, 6, 1, 12, 0, 0);
             var t2 = t1.AddSeconds(2.0);
             var t3 = t2;
@@ -83,6 +80,7 @@ namespace GeigerCounterAPI.Test
 
         }
 
+        [Test]
         public void When_EqualStartAndEnd_ZeroRates()
         {
             var reading = new ParticleReading() { Alpha = 1, Beta = 2, Gamma = 3 };

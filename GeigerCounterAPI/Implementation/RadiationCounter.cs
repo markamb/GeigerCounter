@@ -8,9 +8,9 @@ namespace GeigerCounterAPI.Implementation
     /// </summary>
     public class RadiationCounter : IRadiationCounter
     {
-        private Object _lock;
+        private readonly Object _lock;
         private ParticleAccumulator _accumulator;
-        private ITimeProvider _clock;
+        private readonly ITimeProvider _clock;
 
         public RadiationCounter(ITimeProvider clock)
         {
@@ -32,7 +32,7 @@ namespace GeigerCounterAPI.Implementation
         }
 
         /// <summary>
-        /// Calulates the average number of particles per second since the last call to this method
+        /// Calculates the average number of particles per second since the last call to this method
         /// </summary>
         /// <returns></returns>
         public RadiationSample CalcSample()
