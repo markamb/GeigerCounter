@@ -37,7 +37,7 @@ namespace GeigerCounterAPI.Models
         /// Add a new sample to the database
         /// </summary>
         /// <param name="sample"></param>
-        public virtual async void AddSampleAsync(RadiationSample sample)
+        public virtual async Task AddSampleAsync(RadiationSample sample)
         {
             await Samples.AddAsync(sample);
         }

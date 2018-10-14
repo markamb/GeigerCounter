@@ -129,6 +129,30 @@ namespace GeigerCounterAPI.Test
             Assert.AreEqual(10.0, s.Gamma, DblDelta);
         }
 
+        [Test]
+        public void When_MissingSomeReadings_Expect_DefaultToZero()
+        {
+            var t1 = new DateTime(2018, 6, 1, 12, 0, 0);
+            var t2 = t1.AddSeconds(1.0);
+
+            var mockClock = new Mock<ITimeProvider>(MockBehavior.Strict);
+            mockClock.SetupSequence(x => x.Now).Returns(t1).Returns(t2);
+
+            var reading = new ParticleReading() { Alpha = 10, Beta = null, Gamma = null };
+            var p = new ParticleAccumulator(mockClock.Object);
+            p.TakeReading(reading);
+            var s = p.CalcSample();
+
+            Assert.Throws<InvalidOperationException>(() => p.CalcSample());
+            Assert.Throws<InvalidOperationException>(() => p.TakeReading(reading));
+
+            mockClock.Verify();
+            mockClock.VerifyGet(x => x.Now, Times.Exactly(2));
+            Assert.AreEqual(1, s.Samples);
+            Assert.AreEqual(10.0, s.Alpha, DblDelta);
+            Assert.AreEqual(0, s.Beta, DblDelta);
+            Assert.AreEqual(0, s.Gamma, DblDelta);
+        }
 
     }
 

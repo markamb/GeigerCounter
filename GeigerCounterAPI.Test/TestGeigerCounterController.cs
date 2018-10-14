@@ -5,13 +5,14 @@ using Moq;
 using NUnit.Framework;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
-using GeigerCounterAPI.Implementation;
 using GeigerCounterAPI.Models;
+using GeigerCounterAPI.Implementation;
+using GeigerCounterAPI.Controllers;
 
 namespace GeigerCounterAPI.Test
 {
     [TestFixture]
-    public class GeigerCounterController
+    public class TestGeigerCounterController
     {
         private Mock<GeigerCounterContext>   _mockContext;
         private Mock<IRadiationCounter>      _mockCounter;
@@ -42,7 +43,7 @@ namespace GeigerCounterAPI.Test
             _mockCounter.Setup(x => x.TakeReading(reading2));
 
             // Create the controller and take some readings
-            var controller = new Controllers.GeigerCounterController(_mockContext.Object, _mockCounter.Object);
+            var controller = new GeigerCounterController(_mockContext.Object, _mockCounter.Object);
             controller.TakeReading(reading1);
             controller.TakeReading(reading2);
 
@@ -64,13 +65,13 @@ namespace GeigerCounterAPI.Test
 
             // Expect sample to be calculated from counter, then stored in the context DB
             _mockCounter.SetupSequence(x => x.CalcSample()).Returns(samples[0]).Returns(samples[1]);
-            _mockContext.Setup(x => x.AddSampleAsync(samples[0]));
+            _mockContext.Setup(x => x.AddSampleAsync(samples[0])).Returns(Task.CompletedTask);
             _mockContext.Setup(x => x.SaveChangesAsync(new CancellationToken())).Returns(Task.FromResult(0));
-            _mockContext.Setup(x => x.AddSampleAsync(samples[1]));
+            _mockContext.Setup(x => x.AddSampleAsync(samples[1])).Returns(Task.CompletedTask);
             _mockContext.Setup(x => x.SaveChangesAsync(new CancellationToken())).Returns(Task.FromResult(0));
 
             // now create the controller and test
-            var controller = new Controllers.GeigerCounterController(_mockContext.Object, _mockCounter.Object);
+            var controller = new GeigerCounterController(_mockContext.Object, _mockCounter.Object);
             Assert.AreEqual(samples[0], controller.GetSample().Result.Value);
             Assert.AreEqual(samples[1], controller.GetSample().Result.Value);
 
@@ -98,7 +99,7 @@ namespace GeigerCounterAPI.Test
             _mockContext.SetupSequence(x => x.GetSamplesListAsync()).Returns(Task.FromResult(samples1)).Returns(Task.FromResult(samples2));
 
             // now create the controller and test
-            var controller = new Controllers.GeigerCounterController(_mockContext.Object, _mockCounter.Object);
+            var controller = new GeigerCounterController(_mockContext.Object, _mockCounter.Object);
             Assert.AreEqual(samples1, controller.GetAllSamples().Result.Value);
             Assert.AreEqual(samples2, controller.GetAllSamples().Result.Value);
 

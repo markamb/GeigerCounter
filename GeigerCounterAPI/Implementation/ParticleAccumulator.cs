@@ -44,9 +44,9 @@ namespace GeigerCounterAPI.Implementation
                 throw new InvalidOperationException("Attempt to take radiation reading after sample has been calculated");
 
             _samples++;
-            _alpha += reading.Alpha;
-            _beta += reading.Beta;
-            _gamma += reading.Gamma;
+            _alpha += reading.Alpha ?? 0;
+            _beta += reading.Beta ?? 0;
+            _gamma += reading.Gamma ?? 0;
         }
 
         /// <summary>
