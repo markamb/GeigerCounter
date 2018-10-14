@@ -3,25 +3,25 @@ using System.Collections.Generic;
 using System.Threading;
 using Moq;
 using NUnit.Framework;
-using RadiationCounterAPI.Models;
-using RadiationCounterAPI.Implementation;
 using Microsoft.EntityFrameworkCore;
-using RadiationCounterAPI.Controllers;
+using GeigerCounterAPI.Controllers;
 using System.Threading.Tasks;
+using GeigerCounterAPI.Implementation;
+using GeigerCounterAPI.Models;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace RadiationCounterAPI.Test
+namespace GeigerCounterAPI.Test
 {
     [TestFixture]
-    public class TestRadiationController
+    public class GeigerCounterController
     {
-        private Mock<RadiationCounterContext>   _MockContext;
+        private Mock<GeigerCounterContext>   _MockContext;
         private Mock<IRadiationCounter>         _MockCounter;
 
         [SetUp]
         public void Setup()
         {
-            _MockContext = new Mock<RadiationCounterContext>(MockBehavior.Strict, new DbContextOptions<RadiationCounterContext>());
+            _MockContext = new Mock<GeigerCounterContext>(MockBehavior.Strict, new DbContextOptions<GeigerCounterContext>());
             _MockCounter = new Mock<IRadiationCounter>(MockBehavior.Strict);
         }
 
@@ -44,7 +44,7 @@ namespace RadiationCounterAPI.Test
             _MockCounter.Setup(x => x.TakeReading(reading2));
 
             // Create the controller and take some readings
-            var controller = new RadiationController(_MockContext.Object, _MockCounter.Object);
+            var controller = new Controllers.GeigerCounterController(_MockContext.Object, _MockCounter.Object);
             controller.TakeReading(reading1);
             controller.TakeReading(reading2);
 
@@ -72,7 +72,7 @@ namespace RadiationCounterAPI.Test
             _MockContext.Setup(x => x.SaveChangesAsync(new CancellationToken())).Returns(Task.FromResult(0));
 
             // now create the controller and test
-            var controller = new RadiationController(_MockContext.Object, _MockCounter.Object);
+            var controller = new Controllers.GeigerCounterController(_MockContext.Object, _MockCounter.Object);
             Assert.AreEqual(samples[0], controller.GetSample().Result.Value);
             Assert.AreEqual(samples[1], controller.GetSample().Result.Value);
 
@@ -98,7 +98,7 @@ namespace RadiationCounterAPI.Test
             _MockContext.SetupSequence(x => x.GetSamplesListAsync()).Returns(Task.FromResult(samples1)).Returns(Task.FromResult(samples2));
 
             // now create the controller and test
-            var controller = new RadiationController(_MockContext.Object, _MockCounter.Object);
+            var controller = new Controllers.GeigerCounterController(_MockContext.Object, _MockCounter.Object);
             Assert.AreEqual(samples1, controller.GetAllSamples().Result.Value);
             Assert.AreEqual(samples2, controller.GetAllSamples().Result.Value);
 

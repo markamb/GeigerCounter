@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace RadiationCounterAPI.Models
+namespace GeigerCounterAPI.Models
 {
     /// <summary>
     /// Model for storing an average radiation sample

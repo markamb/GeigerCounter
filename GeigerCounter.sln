@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2041
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeigerCounterAPI.Test", "GeigerCounterAPI.Test\GeigerCounterAPI.Test.csproj", "{32EBECCB-BF13-4976-8C64-90D71E38AC71}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeigerCounterAPI", "GeigerCounterAPI\GeigerCounterAPI.csproj", "{AC00EF10-91F4-44C0-8CE3-BF1A9FE2B747}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{32EBECCB-BF13-4976-8C64-90D71E38AC71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32EBECCB-BF13-4976-8C64-90D71E38AC71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32EBECCB-BF13-4976-8C64-90D71E38AC71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32EBECCB-BF13-4976-8C64-90D71E38AC71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC00EF10-91F4-44C0-8CE3-BF1A9FE2B747}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC00EF10-91F4-44C0-8CE3-BF1A9FE2B747}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC00EF10-91F4-44C0-8CE3-BF1A9FE2B747}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC00EF10-91F4-44C0-8CE3-BF1A9FE2B747}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F18E8AD9-E357-413D-B22E-32ADA50715F2}
+	EndGlobalSection
+EndGlobal

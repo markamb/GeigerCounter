@@ -3,11 +3,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace RadiationCounterAPI.Models
+namespace GeigerCounterAPI.Models
 {
-    public class RadiationCounterContext : DbContext
+    public class GeigerCounterContext : DbContext
     {
-        public RadiationCounterContext(DbContextOptions<RadiationCounterContext> options) : base(options)
+        public GeigerCounterContext(DbContextOptions<GeigerCounterContext> options) : base(options)
         {
         }
 

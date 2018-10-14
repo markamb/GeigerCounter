@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RadiationCounterAPI.Implementation
+namespace GeigerCounterAPI.Implementation
 {
     /// <summary>
     /// Concrete class for retrieving the current system date using the system clock

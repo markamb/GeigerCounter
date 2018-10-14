@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using GeigerCounterAPI.Implementation;
+using GeigerCounterAPI.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RadiationCounterAPI.Implementation;
-using RadiationCounterAPI.Models;
 
-namespace RadiationCounterAPI
+namespace GeigerCounterAPI
 {
     public class Startup
     {
@@ -24,8 +24,8 @@ namespace RadiationCounterAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-//            services.AddDbContext<RadiationCounterContext>(opt => opt.UseInMemoryDatabase("RadiationCounter"));
-            services.AddDbContext<RadiationCounterContext>(options => options.UseSqlServer(Configuration.GetConnectionString("RadiationCounterDatabase")));
+//            services.AddDbContext<GeigerCounterContext>(opt => opt.UseInMemoryDatabase("RadiationCounter"));
+            services.AddDbContext<GeigerCounterContext>(options => options.UseSqlServer(Configuration.GetConnectionString("RadiationCounterDatabase")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<IRadiationCounter, RadiationCounter>((ctx) => { return new RadiationCounter(new TimeProvider()); });
         }

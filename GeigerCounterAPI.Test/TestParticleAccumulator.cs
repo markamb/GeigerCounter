@@ -1,10 +1,10 @@
 ﻿using System;
+using GeigerCounterAPI.Implementation;
+using GeigerCounterAPI.Models;
 using Moq;
 using NUnit.Framework;
-using RadiationCounterAPI.Implementation;
-using RadiationCounterAPI.Models;
 
-namespace RadiationCounterAPI.Test
+namespace GeigerCounterAPI.Test
 {
     [TestFixture]
     public class TestParticleAccumulator

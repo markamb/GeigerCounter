@@ -1,4 +1,4 @@
-﻿namespace RadiationCounterAPI.Models
+﻿namespace GeigerCounterAPI.Models
 {
     /// <summary>
     /// A model storing an individual reading of Alpha, Gamma and Beta particles

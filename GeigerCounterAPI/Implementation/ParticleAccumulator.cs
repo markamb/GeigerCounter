@@ -1,7 +1,7 @@
-﻿using RadiationCounterAPI.Models;
-using System;
+﻿using System;
+using GeigerCounterAPI.Models;
 
-namespace RadiationCounterAPI.Implementation
+namespace GeigerCounterAPI.Implementation
 {
     /// <summary>
     /// Used to accumulate samples and calculate the average particle detection rate over a period of time.

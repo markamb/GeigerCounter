@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RadiationCounterAPI\RadiationCounterAPI.csproj" />
+    <ProjectReference Include="..\GeigerCounterAPI\GeigerCounterAPI.csproj" />
   </ItemGroup>
 
 </Project>

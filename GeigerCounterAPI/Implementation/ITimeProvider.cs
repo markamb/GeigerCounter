@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RadiationCounterAPI.Implementation
+namespace GeigerCounterAPI.Implementation
 {
     /// <summary>
     /// Interface for retrieving the current date and time

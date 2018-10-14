@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using GeigerCounterAPI.Implementation;
+using GeigerCounterAPI.Models;
 using NUnit.Framework;
 using Moq;
-using RadiationCounterAPI.Implementation;
-using RadiationCounterAPI.Models;
 
-namespace RadiationCounterAPI.Test
+namespace GeigerCounterAPI.Test
 {
     [TestFixture]
     class TestRadiationCounter

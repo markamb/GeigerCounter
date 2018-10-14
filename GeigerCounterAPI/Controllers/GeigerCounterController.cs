@@ -1,19 +1,19 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using RadiationCounterAPI.Models;
-using RadiationCounterAPI.Implementation;
+using GeigerCounterAPI.Models;
+using GeigerCounterAPI.Implementation;
 using System.Threading.Tasks;
 
-namespace RadiationCounterAPI.Controllers
+namespace GeigerCounterAPI.Controllers
 {
     [Route("")]
     [ApiController]
-    public class RadiationController : ControllerBase
+    public class GeigerCounterController : ControllerBase
     {
-        private readonly RadiationCounterContext _context;
+        private readonly GeigerCounterContext _context;
         private readonly IRadiationCounter _counter;             // our singleton object for accumulating readings across sessions
 
-        public RadiationController(RadiationCounterContext context, IRadiationCounter counter)
+        public GeigerCounterController(GeigerCounterContext context, IRadiationCounter counter)
         {
             _context = context;
             _counter = counter;

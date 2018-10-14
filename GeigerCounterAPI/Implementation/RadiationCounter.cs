@@ -1,7 +1,7 @@
-﻿using RadiationCounterAPI.Models;
-using System;
+﻿using System;
+using GeigerCounterAPI.Models;
 
-namespace RadiationCounterAPI.Implementation
+namespace GeigerCounterAPI.Implementation
 {
     /// <summary>
     /// A singleton class for counting the number of particles and tracking average number per second

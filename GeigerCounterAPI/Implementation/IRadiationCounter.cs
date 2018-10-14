@@ -1,6 +1,6 @@
-﻿using RadiationCounterAPI.Models;
+﻿using GeigerCounterAPI.Models;
 
-namespace RadiationCounterAPI.Implementation
+namespace GeigerCounterAPI.Implementation
 
 {
     public interface IRadiationCounter

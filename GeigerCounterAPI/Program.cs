@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using RadiationCounterAPI.Models;
 using System;
+using GeigerCounterAPI.Models;
 
-namespace RadiationCounterAPI
+namespace GeigerCounterAPI
 {
     public class Program
     {
@@ -20,7 +20,7 @@ namespace RadiationCounterAPI
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<RadiationCounterContext>();
+                    var context = services.GetRequiredService<GeigerCounterContext>();
                     context.EnsureDatabaseCreated();
                 }
                 catch (Exception ex)
